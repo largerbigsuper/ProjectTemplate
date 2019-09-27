@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  production_mysql_data: {}
+  production_mysql_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    image: apps_production_django
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.mysql
+    ports:
+      - 8000:8000
+    command: ["/start"]
+
+  mysql:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    expose:
+      - "3306"
+    env_file:
+      - ./.envs/.production/.mysql
+  
+  redis:
+    image: redis:5.0
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes

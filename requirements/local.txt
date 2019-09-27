@@ -1,0 +1,8 @@
+-r ./base.txt
+
+# Django
+# ------------------------------------------------------------------------------
+factory-boy==2.12.0  # https://github.com/FactoryBoy/factory_boy
+
+django-debug-toolbar==2.0  # https://github.com/jazzband/django-debug-toolbar
+django-extensions==2.2.1  # https://github.com/django-extensions/django-extensions
